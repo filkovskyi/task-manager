@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const PORT = 4000;
+const PORT = 4001;
 const cors = require('cors');
 const mongoose = require('mongoose');
 const config = require('./DB.js');
@@ -17,7 +17,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.use('/business', taskRoute);
+app.use('/', taskRoute);
 
 app.listen(PORT, function(){
   console.log('Server is running on Port:',PORT);
