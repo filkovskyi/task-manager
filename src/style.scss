@@ -1,0 +1,49 @@
+.task-list {
+  &__wrapper {
+    padding: 20px;
+    background-color: #ededed;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    color: #7f7d7d;
+  }
+}
+
+.task-action-wrapper,
+.task-list__header,
+.task {
+  padding: 15px;
+  background-color: #fff;
+  margin: 3px;
+}
+
+.task {
+  position: relative;
+
+  &:before {
+    display: block;
+    content: '';
+    height: 100%;
+    width: 5px;
+    background-color: navy;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  &-label {
+    font-weight: bold;
+    color: navy;
+  }
+}
+
+// Todo refactor, should overridden default bootstrap styles and variables
+.btn {
+  color: #fff;
+  border-radius: 25px;
+
+  &:hover {
+    color: #fff;
+  }
+}

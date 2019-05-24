@@ -59,16 +59,18 @@ class TaskList extends Component {
   render() {
     return (
       <div className="task-list">
-        <div className="task-list__header row">
-          <div className="task-list__header-item col-md-4">Task</div>
-          <div className="task-list__header-item col-md-2">To cube</div>
-          <div className="task-list__header-item col-md-3">Sort By</div>
-          <div className="task-list__header-item col-md-3">
-            <button className="btn btn-action"
+        <div className="task-action-wrapper row justify-content-end">
+          <div className="task-list__header-item col-md-3 text-right">
+            <button className="btn btn-warning"
                     onClick={this.addItemHandler}
             >Add New
             </button>
           </div>
+        </div>
+        <div className="task-list__header row">
+          <div className="task-list__header-item col-md-4"><label className="task-label">Task</label></div>
+          <div className="task-list__header-item col-md-2">To cube</div>
+          <div className="task-list__header-item col-md-3">Sort By</div>
         </div>
         {( this.state.taskList || []).map(task =>
           <Task key={task.id} task={task} deleteHandler={this.deleteHandler} editHandler={this.editHandler}/>
