@@ -1,28 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import {fetchTaskListBegin, fetchTaskListSuccess, fetchTaskListFailure} from '../actions/actions';
 import TaskList from '../components/TaskList';
+import fetchTaskList from '../services/fetchTaskList';
 
-function fetchTaskList() {
-  return dispatch => {
-    dispatch(fetchTaskListBegin());
-    return fetch('./tasklist.json')
-      .then(handleErrors)
-      .then(res => res.json())
-      .then(json => {
-        dispatch(fetchTaskListSuccess(json.taskList));
-        return json.taskList;
-      })
-      .catch(error => dispatch(fetchTaskListFailure(error)));
-  };
-}
-
-function handleErrors(response) {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response;
-}
 
 class App extends Component {
 
