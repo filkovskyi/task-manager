@@ -1,53 +1,40 @@
-import { combineReducers } from 'redux'
-import { GET_TASK_LIST } from '../actions/actions'
+import {
+  FETCH_TASK_BEGIN,
+  FETCH_TASK_SUCCESS,
+  FETCH_TASK_FAILURE
+} from '../actions/actions';
 
-const taskList = [
-  {
-    id: 1,
-    clientName: 'John Doe',
-    gender: 'male',
-    value: 50,
-    type: 'cube job'
-  },
-  {
-    id: 2,
-    clientName: 'Jade Smith',
-    gender: 'female',
-    value: 250,
-    type: 'cube job'
-  },
-  {
-    id: 3,
-    clientName: 'Garry Woo',
-    gender: 'male',
-    value: 510,
-    type: 'cube job'
-  },
-  {
-    id: 4,
-    clientName: 'Liza Folson',
-    gender: 'female',
-    value: 20,
-    type: 'cube job'
-  }
-];
-
-const initialUserState = {
-  taskList: taskList
+const initialState = {
+  taskList: [],
+  loading: false,
+  error: null
 };
 
-const taskListReducer = function(state = initialUserState, action) {
-  switch(action.type) {
-    case 'GET_TASK_LIST':
-      return Object.assign({}, state, {
-        taskList: action.taskList
-      });
+export default function productReducer(state = initialState, action) {
+  switch (action.type) {
+    case FETCH_TASK_BEGIN:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+
+    case FETCH_TASK_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        taskList: action.payload.taskList
+      };
+
+    case FETCH_TASK_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+        items: []
+      };
+
+    default:
+      return state;
   }
-  return state;
-};
-
-
-
-const rootReducer = combineReducers({taskListReducer});
-
-export default rootReducer;
+}
