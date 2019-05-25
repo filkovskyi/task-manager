@@ -3,9 +3,7 @@ import {connect} from 'react-redux'
 import TaskList from '../components/TaskList';
 import fetchTaskList from '../services/fetchTaskList';
 
-
 class App extends Component {
-
   componentDidMount() {
     this.props.dispatch(fetchTaskList());
   }
@@ -20,8 +18,7 @@ class App extends Component {
     if (loading) {
       return <div>Loading...</div>;
     }
-
-    console.log(taskList)
+    
     return (
       <div className="container task-list__wrapper">
         <TaskList taskList={taskList}/>
