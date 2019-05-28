@@ -1,7 +1,8 @@
 import {
   FETCH_TASK_BEGIN,
   FETCH_TASK_SUCCESS,
-  FETCH_TASK_FAILURE
+  FETCH_TASK_FAILURE,
+  ADD_TASK,
 } from '../actions/actions';
 
 const initialState = {
@@ -32,6 +33,14 @@ export default function productReducer(state = initialState, action) {
         loading: false,
         error: action.payload.error,
         items: []
+      };
+
+    case ADD_TASK:
+      console.log(...state)
+      return {
+        ...state,
+        loading: false,
+        task: action.payload.task
       };
 
     default:

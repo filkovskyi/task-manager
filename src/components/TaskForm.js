@@ -1,36 +1,11 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux'
 import {Formik, Field, Form, Fieldset} from 'formik';
 import {withFormik} from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.css';
-
-const formikEnhancer = withFormik({
-  validationSchema: Yup.object().shape(
-    {
-      clientName: Yup.string().required('Please input client name'),
-      clientValue: Yup.number().required('Please input client job name'),
-      gender: Yup.string().required('Please choose gender'),
-      type: Yup.string().required('Please input client job type')
-    }
-  ),
-
-  mapPropsToValues: props => ({
-    clientName: '',
-    clientValue: '',
-    gender: '',
-    type: ''
-  }),
-
-  handleSubmit: (values, {setSubmitting}) => {
-    const payload = {
-      ...values,
-      type: values.type.value
-    };
-
-    console.log(payload)
-  }
-});
+import {addTask} from '../actions/actions';
 
 const MyForm = props => {
   const {
@@ -211,5 +186,36 @@ class MySelect extends Component {
     );
   }
 }
+
+const formikEnhancer = withFormik({
+  validationSchema: Yup.object().shape(
+    {
+      clientName: Yup.string().required('Please input client name'),
+      clientValue: Yup.number().required('Please input client job name'),
+      gender: Yup.string().required('Please choose gender'),
+      type: Yup.string().required('Please input client job type')
+    }
+  ),
+
+  mapPropsToValues: props => ({
+    clientName: '',
+    clientValue: '',
+    gender: '',
+    type: ''
+  }),
+
+  handleSubmit: (values, {setSubmitting }) => {
+    const payload = {
+      ...values,
+      type: values.type.value
+    };
+
+    console.log(payload);
+
+    setSubmitting(false);
+  },
+
+  displayName: 'TaskFrom'
+});
 
 export const MyEnhancedForm = formikEnhancer(MyForm);
