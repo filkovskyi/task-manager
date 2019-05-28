@@ -5,14 +5,14 @@ const Task = ({task, editHandler, deleteHandler}) => {
     id,
     clientName,
     gender,
-    value,
+    clientValue,
     type
   } = task;
 
   return (
     <div className="task row">
       <div className="task-item col-md-4"> {gender === 'male' ? 'Mr':'Mrs '}{clientName} </div>
-      <div className="task-item col-md-2"> {value} <sup>3</sup></div>
+      <div className="task-item col-md-2"> {clientValue} <sup>3</sup></div>
       <div className="task-item col-md-2"> {type} </div>
       <div className="task-item col-md-2" onClick={() => editHandler(id)}> EDIT </div>
       <div className="task-item col-md-2" onClick={() => deleteHandler(id)}> DELETE </div>
