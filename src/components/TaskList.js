@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import { Field, reduxForm, SubmissionError} from "redux-form";
-import { Modal, Button, Form} from 'react-bootstrap';
+import {Modal, Button, FormGroup, FormControl, FormLabel} from 'react-bootstrap';
+import {Formik, Field, Form, Fieldset} from 'formik';
 import Task from './Task';
 import _ from 'lodash';
 
@@ -15,20 +15,16 @@ class TaskList extends Component {
 
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   };
 
   handleClose() {
-    this.setState({ show: false });
+    this.setState({show: false});
   }
 
   handleShow() {
-    this.setState({ show: true });
+    this.setState({show: true});
   }
 
-  handleSubmit(event) {
-    const form = event.currentTarget;
-  }
   // deleteHandler(id) {
   //   console.log(`Item id - ${id} was deleted`);
   //   const filteredList = this.state.taskList.filter(item => item.id !== id);
@@ -51,7 +47,6 @@ class TaskList extends Component {
 
 
   render() {
-    const { validated } = this.state;
     return (
       <div className="task-list">
         <div className="task-action-wrapper row justify-content-end">
@@ -72,47 +67,54 @@ class TaskList extends Component {
             <Modal.Title>Add new Task</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form>
-              <Form.Group controlId="clientName">
-                <Form.Label>User Name</Form.Label>
-                <Form.Control required type="text" placeholder="Enter your name" />
-              </Form.Group>
-              <Form.Group controlId="value">
-                <Form.Label>Package Value</Form.Label>
-                <Form.Control required type="text" placeholder="Enter package value" />
-              </Form.Group>
-              <Form.Group controlId="gender">
-                <Form.Label>User Gender</Form.Label>
-                <Form.Control required as="select">
-                  <option>Choose gender</option>
-                  <option>Male</option>
-                  <option>Female</option>
-                </Form.Control>
-              </Form.Group>
-              <Form.Group controlId="type">
-                <Form.Label>Job type</Form.Label>
-                <Form.Control required as="select">
-                  <option>Choose job type</option>
-                  <option>Cube Job</option>
-                  <option>Ordinary Job</option>
-                </Form.Control>
-              </Form.Group>
-            </Form>
+            <Formik
+              initialValues={{
+                clientName: '',
+                value: '',
+                type: '',
+                gender: ''
+              }}
+              onSubmit={values => {
+                setTimeout(() => {
+                  alert(JSON.stringify(values, null, 2));
+                }, 500);
+              }}
+              render={() => (
+              <Form>
+                <div className="form-group">
+                  <label htmlFor="clientName">User name</label>
+                  <Field name="clientName" placeholder="Enter your name" />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="value">Task value</label>
+                  <Field name="value" placeholder="Enter task value" />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="type">Task value</label>
+                    <select className="form-control" name="type">
+                      <option value="cubic job">Cubic job</option>
+                      <option value="flat job">Flat job</option>
+                    </select>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="gender">Task value</label>
+                    <select className="form-control" name="gender">
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                </div>
+                <button type="submit">Submit</button>
+              </Form>
+            )}/>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onSubmit={this.handleSubmit} onClick={this.handleClose}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
         </Modal>
       </div>
     );
   }
 }
-
 
 
 export default connect(null, null)(TaskList);
