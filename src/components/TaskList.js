@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 import {Modal, Button} from 'react-bootstrap';
 import Task from './Task';
 import {MyEnhancedForm} from './TaskForm';
@@ -74,6 +75,6 @@ class TaskList extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch => (bindActionCreators({TaskList}, dispatch));
 
-export default connect(null, null)(TaskList);
-
+export default connect(null, mapDispatchToProps)(TaskList)
