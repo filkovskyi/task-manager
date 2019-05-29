@@ -1,0 +1,32 @@
+{
+  "taskList": [
+    {
+      "id": 1,
+      "clientName": "John Doe",
+      "gender": "male",
+      "clientValue": 50,
+      "type": "cube job"
+    },
+    {
+      "id": 2,
+      "clientName": "Marry Rose",
+      "gender": "female",
+      "clientValue": 350,
+      "type": "cube job"
+    },
+    {
+      "id": 3,
+      "clientName": "Garry Woo",
+      "gender": "male",
+      "clientValue": 510,
+      "type": "cube job"
+    },
+    {
+      "id": 4,
+      "clientName": "Liza Folson",
+      "gender": "female",
+      "clientValue": 10,
+      "type": "cube job"
+    }
+  ]
+}
