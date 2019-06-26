@@ -3,7 +3,8 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {Modal, Button} from 'react-bootstrap';
 import Task from './Task';
-import {MyEnhancedForm} from './TaskForm';
+import MyEnhancedForm from './TaskForm';
+import {addTask} from '../actions/actions';
 
 class TaskList extends Component {
   constructor(props) {
@@ -24,27 +25,6 @@ class TaskList extends Component {
   handleShow() {
     this.setState({show: true});
   }
-
-  // deleteHandler(id) {
-  //   console.log(`Item id - ${id} was deleted`);
-  //   const filteredList = this.state.taskList.filter(item => item.id !== id);
-  //   this.setState({
-  //     taskList: filteredList
-  //   });
-  // };
-  //
-  // editHandler(id) {
-  //   console.log(`Item id - ${id} was changed`);
-  //   // harcoded edited values, should be handeled by from
-  //   let filteredItem = _.find(this.state.taskList, {id: id});
-  //   filteredItem.value = '777';
-  //   filteredItem.type = 'Documents';
-  //
-  //   this.setState({
-  //     taskList: [...taskList]
-  //   });
-  // };
-
 
   render() {
     return (
@@ -75,6 +55,4 @@ class TaskList extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => (bindActionCreators({TaskList}, dispatch));
-
-export default connect(null, mapDispatchToProps)(TaskList)
+export default TaskList;

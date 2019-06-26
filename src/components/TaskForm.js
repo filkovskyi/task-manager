@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.css';
 import {addTask} from '../actions/actions';
+import {bindActionCreators} from 'redux';
 
 const MyForm = props => {
   const {
@@ -21,8 +22,15 @@ const MyForm = props => {
     setFieldTouched,
     isSubmitting,
   } = props;
+  
+
   return (
     <form onSubmit={handleSubmit}>
+      <input
+        id="id"
+        value={values.id}
+        type="hidden"
+      />
       <div className="form-group">
         <label htmlFor="clientName"> Client Name</label>
         <input
@@ -201,16 +209,17 @@ const formikEnhancer = withFormik({
     clientName: '',
     clientValue: '',
     gender: '',
-    type: ''
+    type: '',
+    id: new Date().valueOf()
   }),
 
-  handleSubmit: (values, {setSubmitting }) => {
+  handleSubmit: (values, {props, setSubmitting }) => {
     const payload = {
       ...values,
       type: values.type.value
     };
-
-    console.log(payload);
+    
+    props.addTask(payload)
 
     setSubmitting(false);
   },
@@ -218,4 +227,10 @@ const formikEnhancer = withFormik({
   displayName: 'TaskFrom'
 });
 
-export const MyEnhancedForm = formikEnhancer(MyForm);
+const MyEnhancedForm = formikEnhancer(MyForm);
+
+const mapDispatchToProps = dispatch => (bindActionCreators({addTask}, dispatch));
+
+export default connect(null, mapDispatchToProps)(MyEnhancedForm);
+
+

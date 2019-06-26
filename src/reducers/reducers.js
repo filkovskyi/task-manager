@@ -36,14 +36,33 @@ export default function productReducer(state = initialState, action) {
       };
 
     case ADD_TASK:
-      console.log(...state)
       return {
-        ...state,
         loading: false,
-        task: action.payload.task
+        taskList: [... state.taskList, action.payload]
       };
 
     default:
       return state;
   }
 }
+
+
+// deleteHandler(id) {
+  //   console.log(`Item id - ${id} was deleted`);
+  //   const filteredList = this.state.taskList.filter(item => item.id !== id);
+  //   this.setState({
+  //     taskList: filteredList
+  //   });
+  // };
+  //
+  // editHandler(id) {
+  //   console.log(`Item id - ${id} was changed`);
+  //   // harcoded edited values, should be handeled by from
+  //   let filteredItem = _.find(this.state.taskList, {id: id});
+  //   filteredItem.value = '777';
+  //   filteredItem.type = 'Documents';
+  //
+  //   this.setState({
+  //     taskList: [...taskList]
+  //   });
+  // };

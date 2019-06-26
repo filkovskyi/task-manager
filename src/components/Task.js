@@ -8,7 +8,7 @@ const Task = ({task}) => {
     clientValue,
     type
   } = task;
-
+  
   return (
     <div className="task row">
       <div className="task-item col-md-4"> {gender === 'male' ? 'Mr':'Mrs '}{clientName} </div>
