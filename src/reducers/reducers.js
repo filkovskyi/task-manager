@@ -3,6 +3,8 @@ import {
   FETCH_TASK_SUCCESS,
   FETCH_TASK_FAILURE,
   ADD_TASK,
+  EDIT_TASK,
+  DELETE_TASK
 } from '../actions/actions';
 
 const initialState = {
@@ -41,19 +43,19 @@ export default function productReducer(state = initialState, action) {
         taskList: [... state.taskList, action.payload]
       };
 
+    case DELETE_TASK:
+      console.log(action.id)
+      return {
+        loading: false,
+        taskList: [... state.taskList.filter(item => item.id !== action.id)]
+      };
+
     default:
       return state;
   }
 }
 
 
-// deleteHandler(id) {
-  //   console.log(`Item id - ${id} was deleted`);
-  //   const filteredList = this.state.taskList.filter(item => item.id !== id);
-  //   this.setState({
-  //     taskList: filteredList
-  //   });
-  // };
   //
   // editHandler(id) {
   //   console.log(`Item id - ${id} was changed`);
