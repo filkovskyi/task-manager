@@ -57,7 +57,7 @@ export default function productReducer(state = initialState, action) {
     case ADD_TASK:
       return {
         loading: false,
-        taskList: [... state.taskList, action.payload]
+        taskList: [... state.taskList, action.payload],
       };    
 
     case EDIT_TASK:

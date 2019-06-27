@@ -206,7 +206,6 @@ const formikEnhancer = withFormik({
   ),
 
   mapPropsToValues: props => {
-    console.log(props)
     return {
       clientName: props.clientName,
       clientValue: props.clientValue,
@@ -222,11 +221,13 @@ const formikEnhancer = withFormik({
       type: values.type.value
     };
     
-    props.addTask(payload);
-  
-    props.hideModal();
-  
+    console.log(payload)
     setSubmitting(false);
+
+    props.addTask(payload);
+    //props.editTask(payload);
+
+    props.hideModal();
   },
 
   displayName: 'TaskFrom'
@@ -254,7 +255,6 @@ const mapStateToProps = state => {
         id: new Date().valueOf()
       }
   }
-
 };
 
 const mapDispatchToProps = dispatch => (bindActionCreators({addTask, editTask, hideModal}, dispatch));
