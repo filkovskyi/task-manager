@@ -42,6 +42,6 @@ class Task extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => (bindActionCreators({deleteTask, editTask}, dispatch));
+const mapDispatchToProps = dispatch => (bindActionCreators({deleteTask, editTask, showModal}, dispatch));
 
 export default connect(null, mapDispatchToProps)(Task);

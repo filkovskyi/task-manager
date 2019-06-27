@@ -5,7 +5,7 @@ import {withFormik} from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.css';
-import {addTask, hideModal} from '../actions/actions';
+import {addTask, editTask, hideModal} from '../actions/actions';
 import {bindActionCreators} from 'redux';
 
 const MyForm = props => {
@@ -205,13 +205,16 @@ const formikEnhancer = withFormik({
     }
   ),
 
-  mapPropsToValues: props => ({
-    clientName: '',
-    clientValue: '',
-    gender: '',
-    type: '',
-    id: new Date().valueOf()
-  }),
+  mapPropsToValues: props => {
+    console.log(props)
+    return {
+      clientName: props.clientName,
+      clientValue: props.clientValue,
+      gender: props.gender,
+      type: props.type,
+      id: props.id
+    }
+  },
 
   handleSubmit: (values, {props, setSubmitting }) => {
     const payload = {
@@ -231,8 +234,31 @@ const formikEnhancer = withFormik({
 
 const MyEnhancedForm = formikEnhancer(MyForm);
 
-const mapDispatchToProps = dispatch => (bindActionCreators({addTask, hideModal}, dispatch));
+const mapStateToProps = state => {
+  if (state.editTaskItem) {
+    let currentEditTaskItem = {...state.editTaskItem}
+    return {
+      clientName: currentEditTaskItem[0].clientName ,
+      clientValue: currentEditTaskItem[0].clientValue,
+      gender: currentEditTaskItem[0].gender,
+      type: currentEditTaskItem[0].type,
+      id: currentEditTaskItem[0].id
+    }
+  } else {
+    console.log('NIT')
+      return {
+        clientName: '' ,
+        clientValue: '',
+        gender: '',
+        type: '',
+        id: new Date().valueOf()
+      }
+  }
 
-export default connect(null, mapDispatchToProps)(MyEnhancedForm);
+};
+
+const mapDispatchToProps = dispatch => (bindActionCreators({addTask, editTask, hideModal}, dispatch));
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyEnhancedForm);
 
 
