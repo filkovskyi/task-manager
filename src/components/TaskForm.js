@@ -5,7 +5,7 @@ import {withFormik} from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.css';
-import {addTask} from '../actions/actions';
+import {addTask, hideModal} from '../actions/actions';
 import {bindActionCreators} from 'redux';
 
 const MyForm = props => {
@@ -219,8 +219,10 @@ const formikEnhancer = withFormik({
       type: values.type.value
     };
     
-    props.addTask(payload)
-
+    props.addTask(payload);
+  
+    props.hideModal();
+  
     setSubmitting(false);
   },
 
@@ -229,7 +231,7 @@ const formikEnhancer = withFormik({
 
 const MyEnhancedForm = formikEnhancer(MyForm);
 
-const mapDispatchToProps = dispatch => (bindActionCreators({addTask}, dispatch));
+const mapDispatchToProps = dispatch => (bindActionCreators({addTask, hideModal}, dispatch));
 
 export default connect(null, mapDispatchToProps)(MyEnhancedForm);
 

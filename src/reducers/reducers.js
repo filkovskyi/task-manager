@@ -4,13 +4,16 @@ import {
   FETCH_TASK_FAILURE,
   ADD_TASK,
   EDIT_TASK,
-  DELETE_TASK
+  DELETE_TASK,
+  SHOW_MODAL,
+  HIDE_MODAL
 } from '../actions/actions';
 
 const initialState = {
   taskList: [],
   loading: false,
-  error: null
+  error: null,
+  modalState: false
 };
 
 export default function productReducer(state = initialState, action) {
@@ -19,14 +22,14 @@ export default function productReducer(state = initialState, action) {
       return {
         ...state,
         loading: true,
-        error: null
+        error: null,
       };
 
     case FETCH_TASK_SUCCESS:
       return {
         ...state,
         loading: false,
-        taskList: action.payload.taskList
+        taskList: action.payload.taskList,
       };
 
     case FETCH_TASK_FAILURE:
@@ -37,14 +40,33 @@ export default function productReducer(state = initialState, action) {
         items: []
       };
 
+    case SHOW_MODAL:
+      return {
+        loading: false,
+        taskList: [... state.taskList],
+        modalState: true
+      }  
+    
+    case HIDE_MODAL:
+      return {
+        loading: false,
+        taskList: [... state.taskList],
+        modalState: false
+      }  
+
     case ADD_TASK:
       return {
         loading: false,
         taskList: [... state.taskList, action.payload]
+      };    
+
+    case EDIT_TASK:
+      return {
+        loading: false,
+        taskList: [... state.taskList]
       };
 
     case DELETE_TASK:
-      console.log(action.id)
       return {
         loading: false,
         taskList: [... state.taskList.filter(item => item.id !== action.id)]

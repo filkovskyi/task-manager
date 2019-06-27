@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux'
-import {deleteTask} from '../actions/actions';
+import {deleteTask, editTask, showModal} from '../actions/actions';
 import {Dropdown} from 'react-bootstrap';
 
 class Task extends Component {
@@ -9,17 +9,21 @@ class Task extends Component {
     super(props);
 
     this.deleteTaskHandler = this.deleteTaskHandler.bind(this);
+    this.editTaskHandler = this.editTaskHandler.bind(this);
   };
 
   deleteTaskHandler() {
-    console.log(this.props)
     this.props.deleteTask(this.props.task.id)
+  }  
+
+  editTaskHandler() {
+    this.props.editTask(this.props.task.id);
   }
 
   render() {
     return (
     <div className="task row">
-      <div className="task-item col-md-4"> {this.props.task.gender === 'male' ? 'Mr':'Mrs '}{this.props.task.clientName} </div>
+      <div className="task-item col-md-4"> {this.props.task.gender === 'male' ? 'Mr ':'Ms '}{this.props.task.clientName} </div>
       <div className="task-item col-md-2"> {this.props.task.clientValue} <sup>3</sup></div>
       <div className="task-item col-md-3"> {this.props.task.type} </div>
       <div className="task-item col-md-3 text-right">
@@ -28,7 +32,7 @@ class Task extends Component {
             Action
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item href="#">EDIT</Dropdown.Item>
+            <Dropdown.Item href="#" data-id={this.props.task.id} onClick={this.editTaskHandler}>EDIT</Dropdown.Item>
             <Dropdown.Item href="#" data-id={this.props.task.id} onClick={this.deleteTaskHandler}>DELETE</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
@@ -38,6 +42,6 @@ class Task extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => (bindActionCreators({deleteTask}, dispatch));
+const mapDispatchToProps = dispatch => (bindActionCreators({deleteTask, editTask}, dispatch));
 
 export default connect(null, mapDispatchToProps)(Task);

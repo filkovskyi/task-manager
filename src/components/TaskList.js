@@ -4,34 +4,32 @@ import {bindActionCreators} from 'redux'
 import {Modal, Button} from 'react-bootstrap';
 import Task from './Task';
 import MyEnhancedForm from './TaskForm';
-import {addTask} from '../actions/actions';
+import {showModal, hideModal} from '../actions/actions';
 
 class TaskList extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      show: false
-    };
-
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.showModalHandler = this.showModalHandler.bind(this);
+    this.hideModalHandler = this.hideModalHandler.bind(this);
   };
 
-  handleClose() {
-    this.setState({show: false});
+  showModalHandler() {
+    this.props.showModal()
   }
 
-  handleShow() {
-    this.setState({show: true});
+  hideModalHandler() {
+    this.props.hideModal()
   }
 
   render() {
+    const {modalState} = this.props;
+    
     return (
       <div className="task-list">
         <div className="task-action-wrapper row justify-content-end">
           <div className="task-list__header-item col-md-3 text-right">
-            <Button variant="warning" onClick={this.handleShow}>Add New</Button>
+            <Button variant="warning" onClick={this.showModalHandler}>Add New</Button>
           </div>
         </div>
         <div className="task-list__header row">
@@ -42,7 +40,7 @@ class TaskList extends Component {
         {( this.props.taskList || []).map(task =>
           <Task key={task.id} task={task}/>
         )}
-        <Modal show={this.state.show} onHide={this.handleClose}>
+        <Modal show={this.props.modalState} onHide={this.hideModalHandler}>
           <Modal.Header closeButton>
             <Modal.Title>Add new Task</Modal.Title>
           </Modal.Header>
@@ -55,4 +53,12 @@ class TaskList extends Component {
   }
 }
 
-export default TaskList;
+const mapStateToProps = state => {
+  return {
+    modalState: state.modalState
+  }
+};
+
+const mapDispatchToProps = dispatch => (bindActionCreators({showModal, hideModal}, dispatch));
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskList);
