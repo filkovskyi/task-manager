@@ -3,13 +3,16 @@ import ReactDOM from 'react-dom';
 import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import logger from 'redux-logger'
-import thunk from "redux-thunk";
+import createSagaMiddleware from 'redux-saga'
+import fetchTaskListAsync from './services/fetchTaskList';
 import App from './container/App';
 import reducer from './reducers/reducers';
 import 'bootstrap/dist/css/bootstrap.css';
 import './style.scss';
 
-const store = createStore(reducer, {}, applyMiddleware(logger, thunk));
+const sagaMiddleware = createSagaMiddleware()
+const store = createStore(reducer, {}, applyMiddleware(logger, sagaMiddleware));
+sagaMiddleware.run(fetchTaskListAsync)
 
 ReactDOM.render(
   <Provider store={store}>

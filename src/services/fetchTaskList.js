@@ -1,24 +1,22 @@
-import {fetchTaskListBegin, fetchTaskListSuccess, fetchTaskListFailure} from '../actions/actions';
+import { put, takeEvery, call } from 'redux-saga/effects'
+import {fetchTaskListBegin, fetchTaskListSuccess, fetchTaskListFailure, fetchTask} from '../actions/actions';
 
-const fetchTaskList = () => {
-  return dispatch => {
-    dispatch(fetchTaskListBegin());
-    return fetch('./tasklist.json')
-      .then(handleErrors)
-      .then(res => res.json())
-      .then(json => {
-        dispatch(fetchTaskListSuccess(json.taskList));
-        return json.taskList;
-      })
-      .catch(error => dispatch(fetchTaskListFailure(error)));
-  };
-};
-
-function handleErrors(response) {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response;
+function* watchFethTaskList() {
+  yield takeEvery(fetchTask, fetchTaskListAsync);
 }
 
-export default fetchTaskList;
+function* fetchTaskListAsync() {
+  try {
+    yield put(fetchTaskListBegin());
+    const data = yield call(() => {
+      return fetch('./tasklist.json')
+              .then(res => res.json())
+      }
+    );
+    yield put(fetchTaskListSuccess(data));
+  } catch (error) {
+    yield put(fetchTaskListFailure(error));
+  }
+}
+
+export default fetchTaskListAsync;

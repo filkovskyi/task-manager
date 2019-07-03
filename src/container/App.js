@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux'
+import {fetchTask} from '../actions/actions';
 import TaskList from '../components/TaskList';
-import fetchTaskList from '../services/fetchTaskList';
-
 class App extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchTaskList());
+    this.props.fetchTask();
   }
 
   render() {
@@ -35,5 +35,7 @@ const mapStateToProps = state => {
   }
 };
 
-export default connect(mapStateToProps, null)(App);
+const mapDispatchToProps = dispatch => (bindActionCreators({fetchTask}, dispatch));
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
